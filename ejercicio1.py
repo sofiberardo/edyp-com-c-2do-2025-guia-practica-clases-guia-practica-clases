@@ -7,12 +7,12 @@ class Camion:
 
     patentes_usadas = set()   
     
-    def __init__(self, patente, marca, carga, anio, modelo):
+    def __init__(self, patente:str, marca:str, carga:str, anio:int, modelo:str):
         self.patente = self.validar_patente(patente)
-        self.marca = marca
-        self.carga = carga
-        self.anio = anio
-        self.modelo = modelo
+        self.marca = self.validar_cadena(marca)
+        self.carga = self.validar_cadena(carga)
+        self.anio = self.validar_entero(anio)
+        self.modelo = self.validar_cadena(modelo)
 
     def __str__(self):
         return f"Camión: #{self.patente} \nMarca: {self.marca} \nCarga: {self.carga} \nAño: {self.anio}  \nModelo: {self.modelo}"
@@ -41,6 +41,18 @@ class Camion:
             Camion.patentes_usadas.add(patente)
         return patente
     
+    def validar_cadena(self, cadena: str):
+        if not isinstance(cadena, str):
+            raise TypeError('El texto ingresado debe ser una cadena.')
+        if len(cadena) == 0:
+            raise ValueError('El texto ingresado no puede ser vacío.')
+        
+    def validar_entero(self, entero:int):
+        if not isinstance(entero, int):
+            raise TypeError('El texto ingresado debe ser un número entero.')
+        if len(entero) == 0:
+            raise ValueError('El texto ingresado no puede ser vacío')
+        
 # a. Indicá qué devuelven las siguientes expresiones. Analizalo con tus compañeros y 
 # luego ejecutá las instrucciones en la máquina para comprobar tu respuesta.
 
@@ -85,8 +97,10 @@ def registrar_camion(camiones):
     try:
         c = Camion(patente, marca, carga, anio, modelo)
         camiones.append(c)
-    except ValueError:
-        print('Algún dato fue ingresado incorrectamente, vuelva a registrar el camión.')
+    except TypeError as e:
+        print(f'Error: {e}')
+    except ValueError as e:
+        print(f'Error: {e}')
     return camiones
 
 def modificar_carga(camiones):
