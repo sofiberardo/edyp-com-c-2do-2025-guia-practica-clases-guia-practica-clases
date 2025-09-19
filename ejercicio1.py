@@ -3,7 +3,7 @@
 
 # Dada la siguiente clase:
 
-class Camion:
+class Camion():
 
     patentes_usadas = set()   
     
